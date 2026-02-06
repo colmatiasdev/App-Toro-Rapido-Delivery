@@ -193,7 +193,7 @@ const renderMenu = (menuData) => {
     sectionsContainer.innerHTML = "";
 
     menuData.forEach((section, index) => {
-        const isPromo = normalizeKey(section.category).includes("promo");
+        const isPromo = section.category.toLowerCase().includes("promo");
         const sectionId = `cat-${slugify(section.category)}`;
         const tab = document.createElement("button");
         tab.className = `tab${isPromo ? " tab-promo" : ""}${index === 0 ? " active" : ""}`;
@@ -206,7 +206,10 @@ const renderMenu = (menuData) => {
         sectionEl.className = `menu-section${isPromo ? " section-promo" : ""}`;
         sectionEl.id = sectionId;
         sectionEl.innerHTML = `
-            <div class="section-title">${section.category}</div>
+            <div class="section-title ${isPromo ? 'title-promo' : ''}">
+                ${isPromo ? '<i class="fa-solid fa-crown"></i>' : ''}
+                ${section.category}
+            </div>
             <div class="items-list" data-category="${sectionId}"></div>
         `;
         sectionsContainer.appendChild(sectionEl);

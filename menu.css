@@ -237,21 +237,30 @@ body {
     margin-top: 4px;
 }
 .menu-section { margin-top: 20px; }
-.section-title { font-weight: 800; color: var(--dark-blue); margin-bottom: 12px; }
-.menu-section.section-promo .section-title {
-    color: #7c2d12;
-    background: linear-gradient(90deg, rgba(251, 191, 36, 0.35), rgba(251, 191, 36, 0.15));
-    padding: 8px 14px;
-    border-radius: 999px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    border: 1px solid rgba(251, 191, 36, 0.7);
-    box-shadow: 0 8px 16px rgba(251, 191, 36, 0.25);
+/* Título de categoría moderno */
+.section-title {
+    background: white;
+    padding: 18px 20px;
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: var(--dark-blue);
+    border-left: 6px solid var(--primary-red);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+    z-index: 10;
 }
-.menu-section.section-promo .section-title::before {
-    content: "👑";
-    font-size: 1.05em;
+
+/* Estilo exclusivo para PROMOS */
+.section-title.title-promo {
+    background: linear-gradient(90deg, #fffbeb 0%, #ffffff 100%);
+    color: #92400e;
+    border-left: 6px solid #fbbf24; /* Color Oro */
+}
+
+.section-title.title-promo i {
+    color: #fbbf24;
+    margin-right: 10px;
+    filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.5));
 }
 .items-list { display: grid; gap: 12px; }
 .item {
