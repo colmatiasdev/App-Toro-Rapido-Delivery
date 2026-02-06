@@ -327,18 +327,6 @@ const initCategoriesV2 = () => {
     onScroll();
 };
 
-const initSearchV2 = () => {
-    const search = document.getElementById("search-v2");
-    if (!search) return;
-    search.addEventListener("input", (event) => {
-        const query = event.target.value.toLowerCase();
-        document.querySelectorAll(".item").forEach((card) => {
-            const text = card.textContent.toLowerCase();
-            card.style.display = text.includes(query) ? "grid" : "none";
-        });
-    });
-};
-
 const initActionsV2 = () => {
     document.addEventListener("click", (event) => {
         const button = event.target.closest(".qty-btn");
@@ -436,7 +424,6 @@ const initMenu = async () => {
     renderMenu(window.menuData);
     updateCartV2();
     initCategoriesV2();
-    initSearchV2();
     initActionsV2();
     if (loadingEl) loadingEl.style.display = "none";
     const errorEl = document.getElementById("menu-error");

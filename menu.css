@@ -233,40 +233,9 @@ body {
     padding: 20px;
     box-shadow: 0 10px 30px rgba(15,23,42,0.08);
 }
-.search-row {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-bottom: 10px;
+.menu > #menu-sections {
+    margin-top: 4px;
 }
-.search-box {
-    position: relative;
-    flex: 1;
-}
-.search-box i {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--gray-text);
-}
-.search-box input {
-    width: 100%;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 10px 12px 10px 38px;
-    outline: none;
-}
-.filter-btn {
-    border: none;
-    background: #f1f5f9;
-    color: var(--dark-blue);
-    padding: 10px 12px;
-    border-radius: 12px;
-    font-weight: 700;
-    cursor: pointer;
-}
-
 .menu-section { margin-top: 20px; }
 .section-title { font-weight: 800; color: var(--dark-blue); margin-bottom: 12px; }
 .menu-section.section-promo .section-title {
