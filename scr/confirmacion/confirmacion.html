@@ -36,21 +36,21 @@
     </div>
 
     <div class="social-section">
-        <p class="social-title">¿Ya nos sigues?</p>
-        <div class="instagram-row">
-            <i class="fa-brands fa-instagram fa-lg instagram-icon"></i>
-            <a href="#" target="_blank" class="instagram-link" id="ig-link">
+        <div class="social-container">
+            <div class="social-icon"><i class="fa-brands fa-instagram"></i></div>
+            <div class="social-title">¿Ya nos sigues?</div>
+            <a class="social-card" id="ig-link" href="#" target="_blank">
                 <span id="ig-name">@ToroRapidoOk</span>
             </a>
         </div>
     </div>
 
-    <a href="index.html" class="btn-back">
+    <a href="../../index.html" class="btn-back">
         <i class="fa-solid fa-chevron-left"></i> Volver a la carta
     </a>
 </div>
 
-<script src="config.js"></script>
+<script src="../../config.js"></script>
 <script>
     const igConfig = window.APP_CONFIG?.instagram || {};
     const igLink = document.getElementById("ig-link");

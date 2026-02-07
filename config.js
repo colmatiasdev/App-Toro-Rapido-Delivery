@@ -11,6 +11,8 @@ window.APP_CONFIG = {
         rappi: "https://www.rappi.com.ar"
     },
     appsScriptUrl: "https://script.google.com/macros/s/AKfycbzllzUCk1UqUV08XINHmy6Omvcl6JZ8_jRYY8k1WS2N_Kgnyec_mEp9CdVUdhrafC_B/exec",
+    appsScriptMenuUrl: "https://script.google.com/macros/s/AKfycbylqFUqbtvWwgM0CGbF_CT4DkQsbalUjRe69e6FGNs79nzvVPNURbUBWm6kWdHO26qbRA/exec",
+    menuSheetName: "menu-toro-rapido-web",
     costoEnvioBase: 1500,
     montoMinimoEnvioGratis: 25000
 };

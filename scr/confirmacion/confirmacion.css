@@ -93,43 +93,43 @@ p { color: #64748b; line-height: 1.5; margin-bottom: 30px; font-size: 0.95em; }
     margin-bottom: clamp(18px, 4vw, 40px);
 }
 
-.social-title {
-    margin-bottom: 15px;
-    font-weight: 700;
-    color: var(--dark-blue);
+.social-container {
+    text-align: center;
+    display: grid;
+    gap: clamp(12px, 2.6vw, 20px);
 }
 
-.instagram-row {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    gap: clamp(18px, 3.5vw, 32px);
-    margin: clamp(6px, 1.8vw, 16px) 0 clamp(10px, 2.4vw, 22px);
-}
-
-.instagram-icon {
-    color: #e11d48;
+.social-icon {
     font-size: 3.2rem;
-    margin: 0;
+    color: var(--primary-red);
 }
 
-.instagram-link {
+.social-title {
+    font-weight: 800;
+    color: var(--dark-blue);
+    font-size: 1.1rem;
+}
+
+.social-card {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     background: var(--instagram);
     color: white;
-    padding: 14px 28px;
-    border-radius: 50px;
+    padding: 8px 16px;
+    border-radius: 999px;
     text-decoration: none;
-    font-weight: 700;
-    font-size: 0.95em;
-    transition: 0.3s;
-    box-shadow: 0 5px 15px rgba(220, 39, 67, 0.3);
+    font-weight: 800;
+    font-size: 0.82rem;
+    box-shadow: 0 10px 24px rgba(220, 39, 67, 0.3);
+    width: fit-content;
+    margin: 0 auto;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.instagram-link:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(220, 39, 67, 0.4);
+.social-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 26px rgba(220, 39, 67, 0.35);
 }
 
 .btn-back {

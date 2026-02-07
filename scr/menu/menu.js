@@ -190,19 +190,20 @@ const renderMenu = (menuData) => {
     const sectionsContainer = document.getElementById("menu-sections");
     if (!tabsContainer || !sectionsContainer) return;
 
-    tabsContainer.innerHTML = "";
-    sectionsContainer.innerHTML = "";
+    const tabsFragment = document.createDocumentFragment();
+    const sectionsFragment = document.createDocumentFragment();
 
     menuData.forEach((section, index) => {
         const isPromo = section.category.toLowerCase().includes("promo");
         const sectionId = `cat-${slugify(section.category)}`;
+
         const tab = document.createElement("button");
         tab.className = `tab${isPromo ? " tab-promo" : ""}${index === 0 ? " active" : ""}`;
         tab.dataset.target = sectionId;
         tab.dataset.promo = isPromo ? "true" : "false";
         const tabLabel = isPromo ? "PROMOCIONES" : section.category;
         tab.innerHTML = `${isPromo ? '<i class="fa-solid fa-crown"></i>' : ''}<span>${tabLabel}</span>`;
-        tabsContainer.appendChild(tab);
+        tabsFragment.appendChild(tab);
 
         const sectionEl = document.createElement("section");
         sectionEl.className = `menu-section${isPromo ? " section-promo" : ""}`;
@@ -214,7 +215,6 @@ const renderMenu = (menuData) => {
             </div>
             <div class="items-list" data-category="${sectionId}"></div>
         `;
-        sectionsContainer.appendChild(sectionEl);
 
         const list = sectionEl.querySelector(".items-list");
         list.innerHTML = section.items.map((item) => `
@@ -243,7 +243,14 @@ const renderMenu = (menuData) => {
                 <b>¿Necesitás más de 10 unidades?</b> Seleccioná el máximo y avisamos por WhatsApp al confirmar. ¡Nosotros lo modificamos!
             </div>
         `).join("");
+
+        sectionsFragment.appendChild(sectionEl);
     });
+
+    tabsContainer.innerHTML = "";
+    sectionsContainer.innerHTML = "";
+    tabsContainer.appendChild(tabsFragment);
+    sectionsContainer.appendChild(sectionsFragment);
 };
 
 const updateQtyUI = (id, qty) => {
@@ -338,20 +345,44 @@ const initCategoriesV2 = () => {
     });
 
     const sections = Array.from(document.querySelectorAll("#menu-sections .menu-section"));
-    const onScroll = () => {
-        const top = window.scrollY + 140;
-        let activeId = sections[0]?.id;
-        sections.forEach((section) => {
-            if (section.offsetTop <= top) activeId = section.id;
-        });
+    const setActiveTab = (activeId) => {
+        if (!activeId) return;
         buttons.forEach((btn) => {
             const isActive = btn.dataset.target === activeId;
             btn.classList.toggle("active", isActive);
             btn.classList.toggle("active-promo", isActive && btn.dataset.promo === "true");
         });
     };
-    window.addEventListener("scroll", () => requestAnimationFrame(onScroll));
-    onScroll();
+
+    if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries) => {
+            const visible = entries
+                .filter((entry) => entry.isIntersecting)
+                .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+            if (visible.length) {
+                setActiveTab(visible[0].target.id);
+            }
+        }, { rootMargin: "-140px 0px -60% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] });
+
+        sections.forEach((section) => observer.observe(section));
+    } else {
+        let ticking = false;
+        const onScroll = () => {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(() => {
+                const top = window.scrollY + 140;
+                let activeId = sections[0]?.id;
+                sections.forEach((section) => {
+                    if (section.offsetTop <= top) activeId = section.id;
+                });
+                setActiveTab(activeId);
+                ticking = false;
+            });
+        };
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+    }
 };
 
 const initActionsV2 = () => {
@@ -393,7 +424,7 @@ const initActionsV2 = () => {
         } catch (error) {
             console.warn(error);
         }
-        window.location.href = `pedidos.html?pedido=${encoded}`;
+        window.location.href = `../pedidos/pedidos.html?pedido=${encoded}`;
     });
 };
 
@@ -426,7 +457,7 @@ const bindHeaderActions = () => {
     if (backBtn) {
         backBtn.addEventListener("click", (event) => {
             event.preventDefault();
-            window.location.href = "index.html";
+            window.location.href = "../../index.html";
         });
     }
 };
@@ -435,7 +466,7 @@ const loadFooter = async () => {
     const container = document.getElementById("site-footer");
     if (!container) return;
     try {
-        const response = await fetch("footer.html");
+        const response = await fetch("../footer/footer.html");
         if (!response.ok) return;
         container.innerHTML = await response.text();
         window.applyFooterConfig?.();
