@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Inter:wght@400;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="pedidos.css">
-    <link rel="stylesheet" href="footer.css">
-    <script src="config.js"></script>
-    <script src="footer.js"></script>
+    <link rel="stylesheet" href="../footer/footer.css">
+    <script src="../../config.js"></script>
+    <script src="../footer/footer.js"></script>
 </head>
 <body>
 
@@ -19,7 +19,7 @@
 </div>
 
 <div class="contenedor">
-    <a href="menu.html" class="boton-volver-menu" onclick="sessionStorage.setItem('toro_scroll_resumen','1')">
+    <a href="../menu/menu.html" class="boton-volver-menu" onclick="sessionStorage.setItem('toro_scroll_resumen','1')">
         <i class="fa-solid fa-pen-to-square"></i> Modificar pedido
     </a>
 
@@ -98,10 +98,13 @@
 
 
     async function enviarPedido() {
-        const n = document.getElementById('cust-name').value.trim();
-        const w = document.getElementById('cust-phone').value.trim();
-        const d = document.getElementById('cust-address').value.trim();
-        if(!n || !d || !w) { alert("⚠️ Por favor, completa tus datos de entrega."); return; }
+        const nombre = document.getElementById('cust-name').value.trim();
+        const whatsapp = document.getElementById('cust-phone').value.trim();
+        const direccion = document.getElementById('cust-address').value.trim();
+        if (!nombre || !direccion || !whatsapp) {
+            alert("⚠️ Por favor, completa tus datos de entrega.");
+            return;
+        }
 
         const payload = leerPedidoMenu();
         if (!payload || !Array.isArray(payload.items) || payload.items.length === 0) {
@@ -139,7 +142,9 @@
                     idpedido: idPedido,
                     fecha: ahora.toLocaleDateString('es-AR'),
                     hora: ahora.toLocaleTimeString('es-AR'),
-                    cliente: n, whatsapp: w, direccion: d,
+                    cliente: nombre,
+                    whatsapp,
+                    direccion,
                     total: subtotal + costoEnvio,
                     productos: productosParaSheet
                 })
@@ -154,7 +159,7 @@
 
         document.getElementById('overlay-carga').style.display = 'none';
         window.open(`https://wa.me/${TELEFONO_NEGOCIO}?text=${encodeURIComponent(msg)}`, '_blank');
-        window.location.href = "confirmacion.html";
+        window.location.href = "../confirmacion/confirmacion.html";
     }
 
     function leerPedidoMenu() {
@@ -214,15 +219,11 @@
         container.style.display = "block";
     }
 
-    function initPedidos() {
-        renderResumenMenu();
-    }
-
     async function cargarPie() {
         const container = document.getElementById("site-footer");
         if (!container) return;
         try {
-            const response = await fetch("footer.html");
+            const response = await fetch("../footer/footer.html");
             if (!response.ok) return;
             container.innerHTML = await response.text();
             window.applyFooterConfig?.();
