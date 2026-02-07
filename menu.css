@@ -210,6 +210,10 @@ body {
     max-width: 140px;
     overflow: hidden;
     text-overflow: ellipsis;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
 }
 .tab-promo {
     border: 1px solid rgba(251, 191, 36, 0.4);
@@ -474,7 +478,7 @@ body {
     .location-tag { font-size: 0.74rem; padding: 4px 8px; }
     .badge-modern { padding: 5px 9px; font-size: 0.68rem; }
     .category-tabs { padding: 8px 10px; gap: 6px; }
-    .tab { padding: 6px 10px; font-size: 0.78em; max-width: 110px; }
+    .tab { padding: 6px 10px; font-size: 0.78em; max-width: 96px; height: 32px; }
     .content { padding: 10px; gap: 14px; }
     .menu { padding: 14px; border-radius: 18px; }
     .item { padding: 10px; }
