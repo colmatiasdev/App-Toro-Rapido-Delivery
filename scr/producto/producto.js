@@ -337,6 +337,7 @@
             agregarBtn.innerHTML = '<i class="fa-solid fa-basket-shopping"></i> Agregar al pedido';
             agregarBtn.addEventListener("click", function (e) {
                 e.preventDefault();
+                if (agregarBtn.classList.contains("producto-solo-catalogo")) return;
                 if (opcionesData.length > 0) {
                     collectSelected();
                     const missing = opcionesData.filter(
@@ -358,9 +359,31 @@
                 } catch (err) {}
                 window.location.href = returnUrl;
             });
+            applySoloCatalogoSiCorresponde(agregarBtn);
         }
 
         document.title = (item.name || "Producto") + " - Toro Rápido";
+    }
+
+    /** Si el local está cerrado y no hay reserva, deshabilita el botón agregar (modo catálogo). */
+    async function applySoloCatalogoSiCorresponde(agregarBtn) {
+        if (!agregarBtn || typeof window.HorarioAtencion === "undefined") return;
+        try {
+            const result = await window.HorarioAtencion.getHorarioEfectivo();
+            const byDay = result.byDay != null ? result.byDay : result;
+            const feriadoHoySinAtender = result.feriadoHoySinAtender === true;
+            const estado = feriadoHoySinAtender
+                ? { tipo: "cerrado", puedeReservar: false }
+                : window.HorarioAtencion.getEstadoHorario(byDay);
+            const esCerrado = feriadoHoySinAtender || estado.tipo === "cerrado" || estado.tipo === "cerrado-abre-en";
+            const esReserva = !feriadoHoySinAtender && estado.puedeReservar === true;
+            if (esCerrado && !esReserva) {
+                agregarBtn.classList.add("disabled", "producto-solo-catalogo");
+                agregarBtn.style.pointerEvents = "none";
+                agregarBtn.href = "#";
+                agregarBtn.innerHTML = '<i class="fa-solid fa-store-slash"></i> MODO CATÁLOGO — Podrás realizar tu pedido cuando estemos abiertos';
+            }
+        } catch (e) {}
     }
 
     function init() {
